@@ -1,4 +1,4 @@
-﻿/**
+﻿﻿/**
 *  Tipos de dados numéricos inteiros:
 *  int
 *  long
