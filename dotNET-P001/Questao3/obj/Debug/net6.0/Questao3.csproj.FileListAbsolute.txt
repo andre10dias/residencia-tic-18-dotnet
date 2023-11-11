@@ -1,0 +1,15 @@
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\bin\Debug\net6.0\Questao3.exe
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\bin\Debug\net6.0\Questao3.deps.json
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\bin\Debug\net6.0\Questao3.runtimeconfig.json
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\bin\Debug\net6.0\Questao3.dll
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\bin\Debug\net6.0\Questao3.pdb
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.csproj.AssemblyReference.cache
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.GeneratedMSBuildEditorConfig.editorconfig
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.AssemblyInfoInputs.cache
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.AssemblyInfo.cs
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.csproj.CoreCompileInputs.cache
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.dll
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\refint\Questao3.dll
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.pdb
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\Questao3.genruntimeconfig.cache
+C:\_Residencia-Instrução-Prática\dotnet\residencia-tic-18-dotnet\dotNET-P001\Questao3\obj\Debug\net6.0\ref\Questao3.dll
