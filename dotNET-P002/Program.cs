@@ -1,8 +1,8 @@
 ﻿#region métodos utilitários
-List<(string titulo, string descricao, DateTime dataVencimento, bool concluida)> listaTarefas = new();
+List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefas = new();
 
 void exibeTotalTarefas(string situacaoTarefa, 
-    List<(string titulo, string descricao, DateTime dataVencimento, bool concluida)> listaTarefas) {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefas) {
 
     Console.Write($"Total de tarefas {situacaoTarefa}: ");
     if (listaTarefas.Count > 0)
@@ -15,9 +15,32 @@ void exibeTotalTarefas(string situacaoTarefa,
     }
 }
 
+void imprimeTarefas(
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefas)
+{
+    foreach (var tarefa in listaTarefas)
+    {
+        Console.WriteLine(
+            $"\nTítulo: {tarefa.Item1}\n" +
+            $"Descricão: {tarefa.Item2}\n" +
+            $"Data de Criação: {tarefa.Item4}\n" +
+            $"Data de Vencimento: {tarefa.Item3}"
+        );
+    }
+}
+
+void imprimeTarefasSelecao(
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefas)
+{
+    for (int i = 0; i < listaTarefas.Count; i++)
+    {
+        System.Console.WriteLine($"[ {i+1} ] {listaTarefas[i].Item1}");
+    }
+}
+
 void criarTarefa(string titulo, string descricao, DateTime dataVencimento)
 {
-    listaTarefas.Add((titulo, descricao, dataVencimento, false));
+    listaTarefas.Add((titulo, descricao, dataVencimento, DateTime.Now, false));
 }
 
 void excluirTarefa(int indice)
@@ -32,46 +55,13 @@ void marcarTarefaConcluida(int indice)
 {
     if (indice >= 0 && indice < listaTarefas.Count)
     {
-        listaTarefas[indice] = (listaTarefas[indice].Item1, listaTarefas[indice].Item2, listaTarefas[indice].Item3, true);
+        listaTarefas[indice] = (listaTarefas[indice].Item1, listaTarefas[indice].Item2, 
+            listaTarefas[indice].Item3, listaTarefas[indice].Item4, true);
     }
 }
 
-void listarTarefasCriadas()
-{
-    exibeTotalTarefas("criadas", listaTarefas);
-    foreach (var tarefa in listaTarefas)
-    {
-        Console.WriteLine(
-            $"\nTítulo: {tarefa.Item1}\n" +
-            $"Descricão: {tarefa.Item2}\n" +
-            $"Data de Vencimento: {tarefa.Item3}"
-        );
-    }
-}
-
-void listarTarefasPendentes() {
-    List<(string titulo, string descricao, DateTime dataVencimento, bool concluida)> listaTarefasPendentes = new();
-    foreach (var tarefa in listaTarefas)
-    {
-        if (!tarefa.concluida) {
-            listaTarefasPendentes.Add(tarefa);
-        }
-    }
-
-    exibeTotalTarefas("pendentes", listaTarefasPendentes);
-
-    foreach (var tarefa in listaTarefasPendentes)
-    {
-        Console.WriteLine(
-            $"\nTítulo: {tarefa.Item1}\n" +
-            $"Descricão: {tarefa.Item2}\n" +
-            $"Data de Vencimento: {tarefa.Item3}"
-        );
-    }
-}
-
-void listarTarefasConcluidas() {
-    List<(string titulo, string descricao, DateTime dataVencimento, bool concluida)> listaTarefasConcluidas = new();
+List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> retornaListaTarefasConcluidas() {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasConcluidas = new();
     foreach (var tarefa in listaTarefas)
     {
         if (tarefa.concluida) {
@@ -79,16 +69,114 @@ void listarTarefasConcluidas() {
         }
     }
 
-    exibeTotalTarefas("concluídas", listaTarefasConcluidas);
+    return listaTarefasConcluidas;
+}
 
-    foreach (var tarefa in listaTarefasConcluidas)
+List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> retornaListaTarefasPendentes() {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasPendentes = new();
+    foreach (var tarefa in listaTarefas)
     {
-        Console.WriteLine(
-            $"\nTítulo: {tarefa.Item1}\n" +
-            $"Descricão: {tarefa.Item2}\n" +
-            $"Data de Vencimento: {tarefa.Item3}"
-        );
+        if (!tarefa.concluida) {
+            listaTarefasPendentes.Add(tarefa);
+        }
     }
+
+    return listaTarefasPendentes;
+}
+
+void listarTarefasCriadas()
+{
+    exibeTotalTarefas("criadas", listaTarefas);
+    imprimeTarefas(listaTarefas);
+}
+
+void listarTarefasPendentes() {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasPendentes = new();
+    listaTarefasPendentes = retornaListaTarefasPendentes();
+    exibeTotalTarefas("pendentes", listaTarefasPendentes);
+    imprimeTarefas(listaTarefasPendentes);
+}
+
+void listarTarefasPendentesSelecao() {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasPendentes = new();
+    listaTarefasPendentes = retornaListaTarefasPendentes();
+    imprimeTarefasSelecao(listaTarefasPendentes);
+}
+
+void listarTarefasConcluidas() {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasConcluidas = new();
+    listaTarefasConcluidas = retornaListaTarefasConcluidas();
+    exibeTotalTarefas("concluídas", listaTarefasConcluidas);
+    imprimeTarefas(listaTarefasConcluidas);
+}
+
+List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> localizarTarefa(string palavraChave) {
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaTarefasLocalizadas = new();
+    foreach (var tarefa in listaTarefas)
+    {
+        if (tarefa.titulo.Contains(palavraChave) || tarefa.descricao.Contains(palavraChave))
+        {
+            listaTarefasLocalizadas.Add(tarefa);
+        }
+    }
+    
+    return listaTarefasLocalizadas;
+}
+
+int retornaNumerotarefasConcluidas() {
+    int totalTarefasConcluidas = 0;
+
+    foreach (var tarefa in listaTarefas)
+    {
+        if (true == tarefa.concluida)
+        {
+            totalTarefasConcluidas++;
+        }
+    }
+
+    return totalTarefasConcluidas;
+}
+
+int retornaNumeroTarefasPendentes() {
+    int totalTarefasPendentes = 0;
+
+    foreach (var tarefa in listaTarefas)
+    {
+        if (false == tarefa.concluida)
+        {
+            totalTarefasPendentes++;
+        }
+    }
+
+    return totalTarefasPendentes;
+}
+
+(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida) retornaTarefaMaisAntiga() {
+    var tarefaMaisAntiga = listaTarefas[0];
+
+    foreach (var tarefa in listaTarefas)
+    {
+        if (tarefa.dataCriacao < tarefaMaisAntiga.dataCriacao)
+        {
+            tarefaMaisAntiga = tarefa;
+        }
+    }
+
+    return tarefaMaisAntiga;
+}
+
+(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida) retornaTarefaMaisRecente() {
+    var tarefaMaisRecente = listaTarefas[0];
+
+    foreach (var tarefa in listaTarefas)
+    {
+        if (tarefa.dataCriacao > tarefaMaisRecente.dataCriacao)
+        {
+            tarefaMaisRecente = tarefa;
+        }
+    }
+
+    return tarefaMaisRecente;
 }
 #endregion
 
@@ -110,15 +198,32 @@ void novaTarefa() {
 void deletaTarefa() {
     System.Console.Write("\nSelecione a tarefa a ser excluída: ");
     int indice = int.Parse(Console.ReadLine());
-    excluirTarefa(indice);
+    excluirTarefa(indice-1);
     System.Console.WriteLine("\nTarefa excluída com sucesso!\n");
 }
 
 void concluiTarefa() {
     System.Console.Write("\nSelecione a tarefa a ser concluída: ");
     int indice = int.Parse(Console.ReadLine());
-    marcarTarefaConcluida(indice);
+    marcarTarefaConcluida(indice-1);
     System.Console.WriteLine("\nTarefa concluída com sucesso!\n");
+}
+
+void dashboard() {
+    System.Console.WriteLine("\nDashboard");
+    List<(string titulo, string descricao, DateTime dataVencimento, DateTime dataCriacao, bool concluida)> listaAuxiliar = new();
+
+    System.Console.WriteLine("\nNúmero de tarefas pendentes: " + retornaNumeroTarefasPendentes());
+    System.Console.WriteLine("\nNúmero de tarefas concluídas: " + retornaNumerotarefasConcluidas());
+
+    System.Console.WriteLine("\nTarefa mais antiga:");
+    listaAuxiliar.Add(retornaTarefaMaisAntiga());
+    imprimeTarefas(listaAuxiliar);
+
+    System.Console.WriteLine("\nTarefa mais recente:");
+    listaAuxiliar = new();
+    listaAuxiliar.Add(retornaTarefaMaisRecente());
+    imprimeTarefas(listaAuxiliar);
 }
 
 void menu() {
@@ -130,7 +235,8 @@ void menu() {
         "[ 4 ] Listar todas as tarefas\n" +
         "[ 5 ] Listar tarefas pendentes\n" +
         "[ 6 ] Listar tarefas concluídas\n" +
-        "[ 7 ] Sair do Programa\n"
+        "[ 7 ] Dashboard\n" +
+        "[ 8 ] Sair do Programa\n"
     );
 
     System.Console.Write("Opção: ");
@@ -146,7 +252,7 @@ void menu() {
         case 2:
             System.Console.WriteLine("\nExcluir Tarefa");
             System.Console.WriteLine("\nTarefas criadas:");
-            listarTarefasCriadas();
+            imprimeTarefasSelecao(listaTarefas);
             deletaTarefa();
             menu();
             break;
@@ -154,7 +260,7 @@ void menu() {
         case 3:
             System.Console.WriteLine("\nMarcar Tarefa como Concluída");
             System.Console.WriteLine("\nTarefas pendentes:");
-            listarTarefasPendentes();
+            listarTarefasPendentesSelecao();
             concluiTarefa();
             menu();
             break;
@@ -178,6 +284,11 @@ void menu() {
             break;
 
         case 7:
+            dashboard();
+            menu();
+            break;
+        
+        case 8:
             System.Environment.Exit(0);
             break;
         
