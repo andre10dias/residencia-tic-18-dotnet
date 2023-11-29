@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 namespace dotNET_P003;
 public static class App
 {
@@ -21,11 +23,14 @@ public static class App
                 Console.Write("\nCódigo: ");
                 string codigo = Console.ReadLine()!;
 
-                Produto p = Estoque.getProdutoByCodigo(codigo);
-                if (p != null)
-                {
-                    msg = "Código ja cadastrado.";
-                    throw new System.Exception(msg);
+                if (codigo != "")
+                {    
+                    Produto p = Estoque.GetProdutoByCodigo(codigo);
+                    if (p != null)
+                    {
+                        msg = "Código ja cadastrado.";
+                        throw new System.Exception();
+                    }
                 }
                 
                 Console.Write("Nome: ");
@@ -37,16 +42,17 @@ public static class App
                 Console.Write("Preço: ");
                 string preco = Console.ReadLine()!;
 
+                if (codigo == "" || nome == "" || quantidade == "" || preco == "")
+                {
+                    msg = "Preencha todos os campos.";
+                    throw new System.Exception();
+                }
+
                 Produto produto = new Produto(codigo, nome, int.Parse(quantidade), int.Parse(preco));
                 Estoque.AddProduto(produto);
             }
             catch (System.Exception)
             {
-                if (msg == "")
-                {
-                    msg = "Preencha todos os campos.";
-                }
-
                 Console.WriteLine(msg);
                 entradaInvalida = true;
                 continue;
@@ -55,36 +61,88 @@ public static class App
             {
                 if (entradaInvalida)
                 {    
-                    Console.Write("Deseja continuar? (s/n): ");
+                    Console.Write("\nDeseja continuar? (s/n): ");
                     opcao = Console.ReadLine()!;
                 }
             }
-
         } while (entradaInvalida && opcao.ToLower() == "s");
     }
 
     public static void buscarProdutoPorCodigo() 
     {
-        Console.WriteLine("\n==================== Buscar produto por código ====================\n");
+        string msg = "";
+        string opcao = "s";
+        bool naoEncontrado;
 
-        Console.Write("\nCódigo: ");
-        Produto p = Estoque.getProdutoByCodigo(Console.ReadLine()!);
+        do
+        {
+            naoEncontrado = false;
+            Console.WriteLine("\n==================== Buscar produto por código ====================\n");
 
-        if (p != null)
-        {
-            Console.WriteLine("\nProduto Localizado:\n");
-            Console.WriteLine(p.ToString());
-        }
-        else
-        {
-            Console.WriteLine("\nProduto não encontrado.\n");
-        }
+            try
+            {
+                if (Estoque.listaProdutos.Count > 0)
+                {    
+                    Console.Write("\nCódigo: ");
+                    string codigo = Console.ReadLine()!;
+
+                    Produto p = Estoque.GetProdutoByCodigo(codigo);
+                    
+                    if (p != null)
+                    {
+                        Console.WriteLine("\nProduto Localizado:\n");
+                        Console.WriteLine(p.ToString());
+                    }
+                    else
+                    {
+                        msg = "\nProduto não encontrado.\n";
+                        naoEncontrado = true;
+                        throw new System.Exception();
+                    }
+                }
+                else
+                {
+                    msg = "\nNão existem produtos cadastrados.\n";
+                    throw new System.Exception();
+                }
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine(msg);
+                continue;
+            }
+            finally
+            {
+                if (naoEncontrado)
+                {    
+                    Console.Write("\nDeseja continuar? (s/n): ");
+                    opcao = Console.ReadLine()!;
+                }
+            }
+        } while (naoEncontrado && opcao.ToLower() == "s");
     }
 
     public static void consultarEstoque() 
     {
+        string msg = "";
+
         Console.WriteLine("\n==================== Consultar estoque ====================\n");
         Console.WriteLine("\nProdutos no estoque:\n");
-        Estoque.listaProdutos.ForEach(p => Console.WriteLine(p.ToString()+"\n"));
+        try
+        {
+            if (Estoque.listaProdutos.Count > 0)
+            {
+                Estoque.listaProdutos.ForEach(p => Console.WriteLine(p.ToString()+"\n"));
+            }
+            else
+            {
+                msg = "\nNão existem produtos cadastrados.\n";
+                throw new System.Exception();
+            }
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine(msg);
+        }
     }
 }
