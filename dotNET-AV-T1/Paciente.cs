@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace dotNET_AV_T1 {
     public class Paciente {
         public string Nome 
@@ -20,6 +22,13 @@ namespace dotNET_AV_T1 {
                 if (value == null) 
                 {
                     throw new ArgumentNullException("O campo Data de Nascimento é obrigatório.");
+                }
+
+                Regex r = new Regex(@"(\d{2}\/\d{2}\/\d{4})");
+                string valueAsString = value.ToString()!;
+                if (r.Match(valueAsString).Success)
+                {
+                    throw new ArgumentException("O campo Data de Nascimento precisa ter o formato dd/mm/aaaa.");
                 }
             }
         }
