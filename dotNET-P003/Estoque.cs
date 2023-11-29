@@ -8,8 +8,8 @@ public static class Estoque {
 
     public static Produto GetProdutoByCodigo(string codigo) => listaProdutos.Find(p => p.codigo == codigo)!;
 
-    public static List<Produto> GetQtdeProdutosBelowLimit(int limite) => listaProdutos.FindAll(p => p.quantidade < limite);
-
+    //public static List<Produto> GetQtdeProdutosBelowLimit(int limite) => listaProdutos.FindAll(p => p.quantidade < limite);
+    public static List<Produto> GetQtdeProdutosBelowLimit(int limite) => listaProdutos.Where(p => p.quantidade < limite).ToList();
     public static List<Produto> GetProdutosWherePrecoBetween(double min, double max) => listaProdutos.FindAll(p => p.preco >= min && p.preco <= max);
 
     public static double GetTotalPrecoByProduto(Produto p)
