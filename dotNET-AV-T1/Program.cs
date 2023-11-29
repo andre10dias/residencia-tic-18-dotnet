@@ -46,3 +46,22 @@ void criarListaPacientes(Paciente paciente)
         throw new Exception("CPF já cadastrado.");
     }
 }
+
+criarListaMedicos(medico1);
+criarListaMedicos(medico2);
+criarListaPacientes(paciente1);
+criarListaPacientes(paciente2);
+
+Console.WriteLine("Medicos:");
+foreach (Medico medico in listaMedicos)
+{
+    Console.WriteLine(medico.ToString());
+}
+
+Console.WriteLine("");
+
+Console.WriteLine("Pacientes:");
+foreach (Paciente paciente in listaPacientes)
+{
+    Console.WriteLine(paciente.ToString());
+}
