@@ -50,6 +50,45 @@ public static class Menu
                     Console.WriteLine("\nOpcão inválida.\n");
                     break;
             }
+        } while (opcao != "7");
+    }
+
+    public static void MenuRelatorios()
+    {
+        string opcao = "";
+
+        do
+        {    
+            Console.WriteLine("\n==================== Sistema de Gerenciamento de Estoque ====================\n");
+
+            Console.WriteLine(
+                "[ 1 ] Listar produtos com determinada quantidade em estoque"   
+                + "\n[ 2 ] Listar produtos por faixa de valores"
+                + "\n[ 3 ] Exibir valor total do estoque"
+                + "\n[ 4 ] Sair"  
+            );
+
+            Console.Write("\nSelecione uma opção: ");
+            opcao = Console.ReadLine()!;
+
+            switch (opcao)
+            {
+                case "1":
+                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    break;
+                case "2":
+                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    break;
+                case "3":
+                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    break;
+                case "4":
+                    System.Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("\nOpcão inválida.\n");
+                    break;
+            }
         } while (opcao != "4");
     }
 }
