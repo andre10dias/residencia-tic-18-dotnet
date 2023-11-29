@@ -3,10 +3,6 @@ using Microsoft.VisualBasic;
 namespace dotNET_P003;
 public static class App
 {
-    public static void subtraiQtdeProdutos(Produto p, int qtde) {
-        p.quantidade -= qtde;
-    }
-
     public static void cadastrarNovoProduto() 
     {
         string opcao = "s";
@@ -122,12 +118,102 @@ public static class App
         } while (naoEncontrado && opcao.ToLower() == "s");
     }
 
-    public static void consultarEstoque() 
+    public static void registrarEntradaSaidaProdutos(bool registrarEntrada = false) 
     {
         string msg = "";
+        string opcao = "s";
+        int qtdeProdutos = 0;
 
+        string titulo = registrarEntrada ? "Registrar entrada de produtos" : "Registrar saída de produtos";
+           
+        do
+        {
+            Console.WriteLine($"\n==================== {titulo} ====================\n");
+            Console.WriteLine("\nProdutos no estoque:\n");
+            exibirProdutosEstoque();
+
+            qtdeProdutos = Estoque.listaProdutos.Count;
+
+            if (qtdeProdutos > 0)
+            { 
+                try
+                {    
+                    Console.Write("\nCódigo: ");
+                    string codigo = Console.ReadLine()!;
+
+                    Console.Write("\nQuantidade: ");
+                    string quantidade = Console.ReadLine()!;
+
+                    if (codigo != "" && quantidade != "")
+                    {    
+                        Produto p = Estoque.GetProdutoByCodigo(codigo);
+                        if (p != null)
+                        {
+                            if (quantidade != "0") {
+                                if (registrarEntrada) 
+                                {
+                                    p.quantidade += int.Parse(quantidade);
+                                }
+                                else
+                                {
+                                    if (int.Parse(quantidade) < p.quantidade)
+                                    {
+                                        p.quantidade -= int.Parse(quantidade);
+                                    }
+                                    else if (int.Parse(quantidade) == p.quantidade)
+                                    {
+                                        Estoque.listaProdutos.Remove(p);
+                                    }
+                                    else 
+                                    {
+                                        msg = "\nQuantidade em estoque insuficiente.\n";
+                                        throw new System.Exception();
+                                    }
+                                }
+
+                                Console.WriteLine("\nEstoque atualizado.\n");
+                            }
+                        }
+                        else
+                        {
+                            msg = "\nProduto não encontrado.\n";
+                            throw new System.Exception();
+                        }
+                    }
+                    else 
+                    {
+                        msg = "\nPreencha todos os campos.";
+                        throw new System.Exception();
+                    }
+                }
+                catch (System.Exception)
+                {
+                    Console.WriteLine(msg);
+                    continue;
+                }
+                finally
+                {
+                    if (qtdeProdutos > 0)
+                    {    
+                        Console.Write("\nDeseja continuar? (s/n): ");
+                        opcao = Console.ReadLine()!;
+                    }
+                }
+            }
+        } while (qtdeProdutos > 0 && opcao.ToLower() == "s");
+
+    }
+
+    public static void consultarEstoque() 
+    {
         Console.WriteLine("\n==================== Consultar estoque ====================\n");
         Console.WriteLine("\nProdutos no estoque:\n");
+        exibirProdutosEstoque();
+    }
+
+    private static void exibirProdutosEstoque() {
+        string msg = "";
+
         try
         {
             if (Estoque.listaProdutos.Count > 0)

@@ -12,8 +12,11 @@ do
     Console.WriteLine(
         "[ 1 ] Cadastrar novo produto"
         + "\n[ 2 ] Buscar produto por código"
-        + "\n[ 3 ] Consultar estoque"
-        + "\n[ 4 ] Sair"    
+        + "\n[ 3 ] Registrar entrada de produtos"
+        + "\n[ 4 ] Registrar saída de produtos"
+        + "\n[ 5 ] Consultar estoque"
+        + "\n[ 6 ] Relatórios"
+        + "\n[ 7 ] Sair"    
     );
 
     Console.Write("\nSelecione uma opção: ");
@@ -28,9 +31,18 @@ do
             App.buscarProdutoPorCodigo();
             break;
         case "3":
-            App.consultarEstoque();
+            App.registrarEntradaSaidaProdutos(true);
             break;
         case "4":
+            App.registrarEntradaSaidaProdutos();
+            break;
+        case "5":
+            App.consultarEstoque();
+            break;
+        case "6":
+            System.Console.WriteLine("\nAinda não implementado.\n");
+            break;
+        case "7":
             System.Environment.Exit(0);
             break;
         default:
