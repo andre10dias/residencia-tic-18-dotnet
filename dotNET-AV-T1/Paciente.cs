@@ -1,8 +1,28 @@
 namespace dotNET_AV_T1 {
     public class Paciente {
-        public string Nome { get; set; }
+        public string Nome 
+        { 
+            get {return Nome;}
+            set
+            {
+                if (string.IsNullOrEmpty(value.Trim())) 
+                {
+                    throw new ArgumentNullException("O campo Nome é obrigatório.");
+                }
+            }
+        }
 
-        public DateTime DataNascimento { get; set; }
+        public DateTime? DataNascimento 
+        { 
+            get {return DataNascimento;}
+            set
+            {
+                if (value == null) 
+                {
+                    throw new ArgumentNullException("O campo Data de Nascimento é obrigatório.");
+                }
+            }
+        }
 
         public string Cpf 
         { 
@@ -14,19 +34,34 @@ namespace dotNET_AV_T1 {
                     throw new ArgumentNullException("O campo CPF é obrigatório.");
                 }
 
-                if (!Cpf.All(char.IsDigit))
+                if (!value.All(char.IsDigit))
                 {
                     throw new ArgumentException("O campo CPF precisa ter apenas números.");
                 }
 
-                if (Cpf.Length != 11)
+                if (value.Length != 11)
                 {
                     throw new ArgumentException("O campo CPF precisa ter 11 caracteres.");
                 }
             }
         }
 
-        public string Sexo { get; set; }
+        public string Sexo 
+        { 
+            get { return Sexo;}
+            set 
+            {
+                if (string.IsNullOrEmpty(value.Trim()))
+                {
+                    throw new ArgumentNullException("O campo Sexo é obrigatório.");
+                }
+
+                if (value.ToLower() != "masculino" && value.ToLower() != "feminino")
+                {
+                    throw new ArgumentException("O campo Sexo precisa ser 'Masculino' ou 'Feminino'.");
+                }
+            }
+        }
 
         public string Sintomas { get; set; }
 
