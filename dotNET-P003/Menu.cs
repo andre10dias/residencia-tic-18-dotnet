@@ -41,7 +41,7 @@ public static class Menu
                     App.consultarEstoque();
                     break;
                 case "6":
-                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    MenuRelatorios();
                     break;
                 case "7":
                     System.Environment.Exit(0);
@@ -65,7 +65,8 @@ public static class Menu
                 "[ 1 ] Listar produtos com determinada quantidade em estoque"   
                 + "\n[ 2 ] Listar produtos por faixa de valores"
                 + "\n[ 3 ] Exibir valor total do estoque"
-                + "\n[ 4 ] Sair"  
+                + "\n[ 4 ] Voltar para o menu principal"
+                + "\n[ 5 ] Sair"  
             );
 
             Console.Write("\nSelecione uma opção: ");
@@ -74,21 +75,24 @@ public static class Menu
             switch (opcao)
             {
                 case "1":
-                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    App.exibirRelatorioProdutosEstoque();
                     break;
                 case "2":
-                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    App.exibirRelatorioProdutosPorFaixaValores();
                     break;
                 case "3":
-                    System.Console.WriteLine("\nAinda não implementado.\n");
+                    App.exibirRelatorioValorTotalEstoque();
                     break;
                 case "4":
+                    MenuPrincipal();
+                    break;
+                case "5":
                     System.Environment.Exit(0);
                     break;
                 default:
                     Console.WriteLine("\nOpcão inválida.\n");
                     break;
             }
-        } while (opcao != "4");
+        } while (opcao != "5");
     }
 }

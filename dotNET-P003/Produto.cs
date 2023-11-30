@@ -16,7 +16,7 @@ namespace dotNET_P003 {
 
         public override string ToString()
         {
-            return $"Código: {codigo}\nNome: {nome}\nQuantidade: {quantidade}\nPreço: {preco}";
+            return $"Código: {codigo}\nNome: {nome}\nQuantidade: {quantidade}\nPreço: {preco.ToString("C")}";
         }
     }
 }

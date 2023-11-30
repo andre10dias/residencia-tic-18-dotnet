@@ -3,6 +3,29 @@ using Microsoft.VisualBasic;
 namespace dotNET_P003;
 public static class App
 {
+    #region Mockup de dados para teste
+
+    public static void InicializarMockupEstoque()
+    {
+        Produto produto1 = new Produto("123", "Feijão", 3, 7.50);
+        Estoque.AddProduto(produto1);
+
+        Produto produto2 = new Produto("321", "Arroz", 1, 4.99);
+        Estoque.AddProduto(produto2);
+
+        Produto produto3 = new Produto("654", "Ovos", 30, 17.50);
+        Estoque.AddProduto(produto3);
+
+        Produto produto4 = new Produto("456", "Frango", 10, 15.00);
+        Estoque.AddProduto(produto4);
+
+        Produto produto5 = new Produto("789", "Cuzcuz", 6, 2.55);
+        Estoque.AddProduto(produto5);
+    }
+
+    #endregion
+
+    #region Métodos menu principal
     public static void cadastrarNovoProduto() 
     {
         string opcao = "s";
@@ -231,4 +254,129 @@ public static class App
             Console.WriteLine(msg);
         }
     }
+
+    #endregion
+
+    #region Métodos dos relatórios
+
+    public static void exibirRelatorioProdutosEstoque() 
+    {
+        string msg = "";
+        string opcao = "s";
+
+        do
+        {    
+            Console.WriteLine("\n==================== Relatório de produtos abaixo de um limite ====================\n");
+            
+            try
+            {
+                Console.Write("\nLimite de estoque: ");
+                string limite = Console.ReadLine()!;
+
+                if (limite != null)
+                {    
+                    List<Produto> produtos = Estoque.GetQtdeProdutosBelowLimit(int.Parse(limite));
+
+                    if (produtos.Count > 0)
+                    {    
+                        Console.WriteLine("\nProdutos no estoque abaixo do limite informado:\n");
+                        foreach (var p in produtos)
+                        {
+                            Console.WriteLine(p.ToString()+"\n");
+                        }
+                    }
+                    else
+                    {
+                        msg = "\nNão existem produtos abaixo do limite informado.\n";
+                        throw new System.Exception();
+                    }
+                }
+                else
+                {
+                    msg = "\nO campo limite é obrigatório.\n";
+                    throw new System.Exception();
+                }
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine(msg);
+                continue;
+            }
+            finally
+            {
+                Console.Write("\nDeseja continuar? (s/n): ");
+                opcao = Console.ReadLine()!;
+            }
+        } while (opcao.ToLower() == "s");
+    }
+
+    public static void exibirRelatorioProdutosPorFaixaValores() 
+    {
+        string msg = "";
+        string opcao = "s";
+
+        do
+        {    
+            Console.WriteLine("\n==================== Relatório de produtos por faixa de valores ====================\n");
+            
+            try
+            {
+                Console.Write("\nValor 1: ");
+                string valor1 = Console.ReadLine()!;
+
+                Console.Write("\nValor 2: ");
+                string valor2 = Console.ReadLine()!;
+
+                if (valor1 != null && valor2 != null)
+                {    
+                    List<Produto> produtos = Estoque.GetProdutosWherePrecoBetween(double.Parse(valor1), double.Parse(valor2));
+
+                    if (produtos.Count > 0)
+                    {    
+                        Console.WriteLine($"\nProdutos no estoque com valores entre {valor1} e {valor2}:\n");
+                        foreach (var p in produtos)
+                        {
+                            Console.WriteLine(p.ToString()+"\n");
+                        }
+                    }
+                    else
+                    {
+                        msg = "\nNão existem produtos dentro da faixa de valores informada.\n";
+                        throw new System.Exception();
+                    }
+                }
+                else
+                {
+                    msg = "\nPreencha todos os campos.\n";
+                    throw new System.Exception();
+                }
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine(msg);
+                continue;
+            }
+            finally
+            {
+                Console.Write("\nDeseja continuar? (s/n): ");
+                opcao = Console.ReadLine()!;
+            }
+        } while (opcao.ToLower() == "s");
+    }
+
+    public static void exibirRelatorioValorTotalEstoque() 
+    {
+        Console.WriteLine("\n==================== Relatório de valor total do estoque ====================\n");
+
+        Console.WriteLine("\nValor total por produto:\n");
+        foreach (var p in Estoque.listaProdutos)
+        {
+            Console.WriteLine(p.codigo + " - " +  p.nome + ":");
+            Console.WriteLine("Valor total: " + Estoque.GetTotalPrecoByProduto(p).ToString("C") + "\n");
+        }
+
+        Console.WriteLine($"\nO valor total do estoque é de: {Estoque.GetTotalPrecoProdutosInEstoque().ToString("C")}.\n");
+    }
+
+    #endregion
 }
